@@ -1,0 +1,11 @@
+html,body{height: 100%}
+#wrap{min-height: 100%;}
+#main{overflow: auto;
+  padding-bottom: 60px;}
+#footer {
+  position:relative;
+  margin-top: -60px;
+  height: 60px;
+  clear:both;
+  background-color: #000;
+}

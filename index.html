@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>TP IHM</title>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="CSS/bootstrap.css">
+  <link rel="stylesheet" href="CSS/style.css">
+
+  </head>
+  <body>
+    <div id="wrap">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Lyon 1</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li><a href="index.html">Home</a></li>
+    			     <li class="dropdown">
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About us<span class="caret"></span></a>
+    	            <ul class="dropdown-menu">
+    	        <li><a type="button" data-toggle="modal" data-target="#myModalMailling" data-receive="nguyenvanthanhtu@gmail.com">NGUYEN Van-Thanh-Tu </a></li>
+    	        <li><a data-toggle="modal" data-target="#myModalMailling" data-receive="tranngocminh@gmail.com">TRAN Ngoc-Minh</a></li>
+    	        <li role="separator" class="divider"></li>
+    	        <li class="dropdown-header">Contact</li>
+    	        <li><a href="#">Leave us your mail</a></li>
+    	      </ul>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+
+
+<!-- MODAL for mailling-->
+<div class="modal fade" id="myModalMailling" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalMaillingLabel">New message</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">Recipient:</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="control-label">Message:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send message</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id ="main">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-sm-9">
+        <table class="table" id="mytable">
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Image</th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+        </table>
+      </div>
+      <div class="col-sm-3">
+        <br/>
+        <br/>
+        <br/>
+        <button title="Generer 3 elements (pour le developpeur seulement)" class="btn btn-success" onclick="generateElement()">Créer Elements</button>
+        <br/>
+        <br/>
+        <button title="Ajouter un element" class="btn btn-info" type="button" data-toggle="modal" data-target="#myModal" id="addBtn" href="javascript:;" >
+          Ajouter Element
+        </button>
+        <br/>
+        <br/>
+        <button title="Supprimer les élements choisis" class="btn btn-danger" data-toggle="modal" data-target="#confirm-delete-Modal" id="deleteBtn" >Supprimer Element</button>
+        <br/>
+        <br/>
+        <br/>
+        <strong style="color:green;"> Notification </strong>
+
+        <!-- NOTIFICATION-->
+        <div class= "alert alert-info" id="noti-success-alert">
+            <button type="button" class="close" data-dismiss="alert">x</button>
+            <strong>Bienvenue! </strong>
+            <div id="message-noti">Planer sur le button pour plus d'information</div>
+        </div>
+      </div>
+    </div>
+    <div class="row " >
+      <div class = "col-sm-3">
+        
+      </div>
+
+      <div class = "col-sm-9">
+        
+      </div>  
+
+      <!-- MODAL for adding item and customize detail of item -->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Customize your element</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                  <div class="form-group">
+                    <label for="element-name" class="control-label">Name</label>
+                    <input type="text" class="form-control" id="name">
+                  </div>
+                  <div class="form-group">
+                    <label for="element-type" class="control-label">Type</label>
+                    <select class="form-control" id="type">
+                      <option value="Batiment">Batiment</option>
+                      <option value="Station">Station</option>
+                      <option value="Monument">Monument</option>
+                      <option value="Monument">Cafeteria</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="element-image" class="control-label">Image</label>
+                  </br>take nautibus picture by default
+                    <!--<input type="file" name="pic" accept="*"id="image">-->
+                  </div>
+                  <div class="form-group">
+                    <label for="element-description" class="control-label">Description</label>
+                    <textarea class="form-control" id="description"></textarea>
+                  </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" onclick="addItem()" id="confirm-add">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL for EDIT ELEMENT-->
+      <div class="modal fade" id="edit-Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Edit your element</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                  <div class="form-group">
+                    <label for="element-name" class="control-label">Name</label>
+                    <input type="text" class="form-control" id="name">
+                  </div>
+                  <div class="form-group">
+                    <label for="element-type" class="control-label">Type</label>
+                    <select class="form-control" id="type">
+                      <option value="Batiment">Batiment</option>
+                      <option value="Station">Station</option>
+                      <option value="Monument">Monument</option>
+                      <option value="Monument">Cafeteria</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="element-image" class="control-label">Image</label>
+                  </br>take nautibus picture by default
+                    <!--<input type="file" name="pic" accept="*"id="image">-->
+                  </div>
+                  <div class="form-group">
+                    <label for="element-description" class="control-label">Description</label>
+                    <textarea class="form-control" id="description"></textarea>
+                  </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" onclick="editItem()" id="confirm-edit">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL for DELETE ELEMENT-->
+      <div class="modal fade" tabindex="-1" role="dialog" id="confirm-delete-Modal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Delete Item</h4>
+            </div>
+            <div class="modal-body">
+              <p>Confirm to delete these element ?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Nah, I change my mind</button>
+              <button type="button" class="btn btn-primary" onclick="deleteItem()" id = "confirm-delete">Yes sure, why not?</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
+    </div>
+  </div>
+</div>
+</div>
+  <div id = "footer">
+    <div class="container">
+      <p class="text-muted">Hello this is a footer. Why are you reading a footer? It's awkward... I just gonna leave. Bye.</p>
+    </div>
+  </div>
+
+
+  <script type="text/javascript" src="JS/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="JS/functionIHM.js"></script>
+  <script type="text/javascript" src="JS/bootstrap.js"></script>
+  <script type="text/javascript" src="JS/jqueryIHM.js"></script>
+
+  </body>
+
+</html>

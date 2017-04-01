@@ -5,7 +5,7 @@
   <meta charset="utf-8"/>
   <link rel="stylesheet" href="CSS/bootstrap.css">
   <link rel="stylesheet" href="CSS/style.css">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
     <div id="wrap">
@@ -67,12 +67,12 @@
       <div class="col-sm-9">
         <table class="table" id="mytable">
             <tr>
-              <th>Name</th>
+              <th>Nom</th>
               <th>Type</th>
               <th>Image</th>
-              <th></th>
-              <th></th>
-              <th></th>
+              <th>Modifier</th>
+              <th>Supprimer</th>
+              <th><input type="checkbox" name="checkall" id="checkall"></th>
             </tr>
         </table>
       </div>
@@ -97,7 +97,7 @@
         <!-- NOTIFICATION-->
         <div class= "alert alert-info" id="noti-success-alert">
             <button type="button" class="close" data-dismiss="alert">x</button>
-            <strong>Bienvenue! </strong>
+            <strong id="title-noti">Bienvenue! </strong>
             <div id="message-noti">Planer sur le button pour plus d'information</div>
         </div>
       </div>
@@ -209,6 +209,26 @@
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Nah, I change my mind</button>
               <button type="button" class="btn btn-primary" onclick="deleteItem()" id = "confirm-delete">Yes sure, why not?</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
+
+      <!-- MODAL for DELETE SINGLE ELEMENT-->
+      <div class="modal fade" tabindex="-1" role="dialog" id="confirm-delete-single-Modal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Delete Item</h4>
+            </div>
+            <div class="modal-body">
+              <p>Confirm to delete these element ?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Nah, I change my mind</button>
+              <button type="button" class="btn btn-primary" onclick="deleteSingleItem()" id = "confirm-delete">Yes sure, why not?</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

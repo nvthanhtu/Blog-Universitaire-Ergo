@@ -3,6 +3,7 @@ var counting=1;
 var curItemEdit=null;
 var curItemIndex=null;
 var curIndexList=null;
+var curItemId=null;
 
 
 
@@ -16,6 +17,15 @@ var curIndexList=null;
                 $("#noti-success-alert").slideUp(1000);
                 });
     }
+
+    $('#checkall').click(function(){
+    	if($(this).is(':checked')){
+    		$('input:checkbox').attr('checked',true);
+    	}
+    	else{
+    		$('input:checkbox').attr('checked',false);
+    	}
+    });
 
 	$('#myModalMailling').on('show.bs.modal', function (event) {
 	   	var button = $(event.relatedTarget) // Button that triggered the modal
@@ -38,11 +48,15 @@ var curIndexList=null;
 		var cell3 =row.insertCell(2);
 		var cell4 = row.insertCell(3);
 		var cell5 =  row.insertCell(4);
+		var cell6 = row.insertCell(5);
 	  	cell1.innerHTML = item.name;
 	  	cell2.innerHTML = item.type;
 	    cell3.innerHTML = "<img src=\'"+item.image+"\' width = 100px height=70px>";
-		cell4.innerHTML = "<button type=\"button\" class=\"btn btn-warning\" id = \'"+item.id+"\' onclick=\"showModalwithdetail(this.id,"+rowCount+")\">Edit</button>";
-		cell5.innerHTML = "<input type=\"checkbox\" name=\"chk\" value= \'"+item.id+"\'/>";
+		cell4.innerHTML = 
+		"<button type=\"button\" class=\"btn btn-warning\" id = \'"+item.id+"\' onclick=\"showModalwithdetail(this.id)\" width=\"30\" height= \"30\"> <img src=\"Image/edit.ico\" width=\"20\" height=\"20\"></button>";
+		cell5.innerHTML = 
+		"<button type=\"button\" class=\"btn btn-warning\" id = \'"+item.id+"\' onclick=\"getCurItemSelected(this.id)\" width=\"30\" height= \"30\"> <img src=\"Image/delete.ico\" width=\"20\" height=\"20\"></button>";
+		cell6.innerHTML = "<input type=\"checkbox\" name=\"chk\" value= \'"+item.id+"\'/>";
 		notify("alert alert-success","Element(s) generated into the list");
 		
 	}
@@ -65,6 +79,11 @@ var curIndexList=null;
      	counting ++;
 		addTotable(ItemList[i]);
 		}
+	}
+
+	function getCurItemSelected(itemId){
+		curItemId=itemId;
+		$('#confirm-delete-single-Modal').modal('toggle');
 	}
 
   	function addItem(){
@@ -100,12 +119,18 @@ var curIndexList=null;
 		var countCheckBox=0;
 		var table = document.getElementById("mytable");
 	  	var rowCount = table.rows.length;
-	  	for(var i=0; i<rowCount; i++) {
+	  	for(var i=1; i<rowCount; i++) {
 	   		var row = table.rows[i];
-	    	var chkbox = row.cells[4].childNodes[0];
+	    	var chkbox = row.cells[5].childNodes[0];
 	    	if(null != chkbox && true == chkbox.checked) {
-		    	table.deleteRow(i);
-				ItemList.splice(i,1);
+		    	
+				row.remove();
+				//find and delete item in ItemList
+				for(var j=0; j<ItemList.length;j++){
+					if(ItemList[j].id==row.id){
+						ItemList.splice(j,1);
+					}
+				}
 		      	rowCount--;
 
 		      	i--;
@@ -123,6 +148,29 @@ var curIndexList=null;
 	}
 
 
+
+	function deleteSingleItem(){
+		var found=false;
+		for(var i=0; i<ItemList.length;i++){
+			if(ItemList[i].id==curItemId){
+				
+				ItemList.splice(i,1);
+				var row = document.getElementById(curItemId);
+				row.remove();
+				found=true;
+				break;
+			}
+		}
+		if(found){
+			notify("alert alert-success","Element is removed");
+		}
+		else{
+			notify("alert alert-warning","Can't find the object selected in ItemList");
+		}
+		$('#confirm-delete-single-Modal').modal('toggle');
+	}
+
+
 	function editItem(){
 		var item = curItemEdit;
 		//update item
@@ -137,9 +185,10 @@ var curIndexList=null;
 				throw "Error during updating ItemList";
 			}
 			ItemList[curIndexList]=item;
-			var table = document.getElementById("mytable");
-			table.rows[curItemIndex].cells[0].innerHTML=item.name;
-			table.rows[curItemIndex].cells[1].innerHTML=item.type;
+			//var table = document.getElementById("mytable");
+			var row = document.getElementById(curItemEdit.id);
+			row.cells[0].innerHTML=item.name;
+			row.cells[1].innerHTML=item.type;
 	  		//other cell keep the same info
 
 	  		//notify
@@ -152,7 +201,7 @@ var curIndexList=null;
 	}
 
 	//show modal create with item detail
-	function showModalwithdetail(itemId,index){
+	function showModalwithdetail(itemId){
 		var item;
 		for (i=0; i<ItemList.length;i++)
 		{
@@ -160,7 +209,7 @@ var curIndexList=null;
 			{
 				item = ItemList[i];
 				curItemEdit=item;
-				curItemIndex=index;
+				//curItemIndex=index;
 				curIndexList=i;
 				break;
 			}
@@ -185,6 +234,7 @@ var curIndexList=null;
 		//if(message.hasClass("hide"))
 			//message.removeClass("hide");
 		message.setAttribute("class",class_type);
+		document.getElementById("title-noti").innerHTML= "";
 		document.getElementById("message-noti").innerHTML= mess;
 		showAlert();
 	}
